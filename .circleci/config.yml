@@ -1,20 +1,19 @@
 version: 2.1
-# Define the jobs for testwebapp (check out code and run a deploy.sh script)
+
 jobs:
   pull-and-build:
     docker:
-      – image: arvindr226/alpine-ssh
+      - image: arvindr226/alpine-ssh
     steps:
-      – checkout
-      – run: ssh -oStrictHostKeyChecking=no -v $USERNAME@$HOSTNAME "./deploy.sh"
+      - checkout
+      - run: ssh -oStrictHostKeyChecking=no -v $USERNAME@$HOSTNAME "./deploy.sh"
 
-# Orchestrate the testwebapp job run sequence (runs only on commit to main branch)
 workflows:
   version: 2
   build-project:
     jobs:
-      – pull-and-build:
-        filters:
-          branches:
+      - pull-and-build: 
+        filter:
+          branches: 
             only:
-              – main
+              - main
